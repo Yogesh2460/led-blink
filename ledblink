@@ -1,0 +1,37 @@
+#include<lpc17xx.h>
+void wait(uint32_t);
+uint32_t x;
+int main()
+{
+   LPC_GPIO1->FIODIR |= (1<<28);
+   LPC_GPIO2->FIODIR |= (1<<6);
+    LPC_GPIO0->FIODIR &=~(1<<27);
+   while(1)
+   {
+		 
+		 x= (((LPC_GPIO0->FIOPIN) & (1<<27)) >> 27);
+		 
+		 if(x==1)
+		 {
+			 
+   LPC_GPIO1->FIOSET |= (1<<28);
+	 wait(30000000);
+	 LPC_GPIO1->FIOCLR |= (1<<28);
+	 wait(30000000);
+	 }
+		 else
+		 {
+			 
+   LPC_GPIO2->FIOSET |= (1<<6);
+	 wait(30000000);
+	 LPC_GPIO2->FIOCLR |= (1<<6);
+	 wait(30000000);
+	 }
+	 }
+ }	 
+	 void wait(uint32_t i)
+	 {
+	    uint32_t x;
+		for(x=0;x<=i;x++);
+		}
+		
